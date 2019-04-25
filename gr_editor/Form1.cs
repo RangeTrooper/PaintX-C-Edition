@@ -60,6 +60,10 @@ namespace gr_editor
             };
             figures.Add(rect);
             isPressed = true;
+            
+           // Cursor.Position = new Point(Cursor.Position.X - 50, Cursor.Position.Y - 50);
+           // Cursor.Clip = new Rectangle(this.Location, this.Size);
+           // Cursor.Clip = new Rectangle(0,0, pictureBox1.Width,pictureBox1.Height);
         }
 
         private void OnPanelMouseReleased(object sender, MouseEventArgs e)
@@ -74,7 +78,8 @@ namespace gr_editor
            if(isPressed)
             {
                 rightBotVert = e.Location;
-                figures[figures.Count - 1].Resize(e.Location);
+                rightBotVert=CheckPosition(rightBotVert); 
+                figures[figures.Count - 1].Resize(CheckPosition(rightBotVert));
                 Draw();
             }
         }
@@ -139,5 +144,32 @@ namespace gr_editor
                     break;
             }
         }
+
+        private Point CheckPosition(Point vertex)
+        {
+            if(isPressed)
+            {
+               // pictureBox1.Cursor = new Cursor(Cursor.Current.Handle);
+                if (vertex.X <= 0)
+                {
+                    vertex = new Point(5, vertex.Y);
+                }
+                else if (vertex.X >= pictureBox1.Width)
+                {
+                    vertex = new Point(pictureBox1.Width-5, vertex.Y);
+                }
+                else if (vertex.Y <= 0)
+                {
+                    vertex = new Point(vertex.X, 5);
+                }
+                else if (vertex.Y >= pictureBox1.Height)
+                {
+                    vertex = new Point(vertex.X, pictureBox1.Height-5);
+                }
+            }
+            return vertex;
+            
+        }
+
     }
 }
