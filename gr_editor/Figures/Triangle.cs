@@ -14,11 +14,16 @@ namespace gr_editor.Figures
 
         }
 
+        public Triangle():base()
+        {
+
+        }
+
         public override void Draw(Graphics g, Pen pen)
         {
             g.DrawLine(pen, x, y + h, x + w, y + h);
             g.DrawLine(pen, x, y + h, x + w / 2, y);
-            g.DrawLine(pen, x + w/2, y,x+2,y+h);
+            g.DrawLine(pen, x + w/2, y,x+w,y+h);
 
         }
     }

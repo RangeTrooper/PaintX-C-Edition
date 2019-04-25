@@ -18,12 +18,11 @@ namespace gr_editor
         Graphics g; 
         Point leftUpVert;
         Point rightBotVert;
-        List<AbstrFigure> figures = new List<AbstrFigure>();
-        List<AbstrFigure> undoList = new List<AbstrFigure>();
+        FiguresList figures = new FiguresList();
+        FiguresList undoList = new FiguresList();
         Bitmap bmp;
-        AbstrFigure Tool;
-        Type type;
-        bool flag;
+        bool isToolChosen=false;
+        String tool;
 
         public Form1()
         {
@@ -32,11 +31,8 @@ namespace gr_editor
             
             this.KeyPreview = true;
             bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
-            Rect rect = new Rect();
-            Oval oval = new Oval();
-            ToolBox.Items.Add(rect);
-            ToolBox.Items.Add(oval);
-            flag = false;
+            
+            
         }
 
 
@@ -52,25 +48,29 @@ namespace gr_editor
 
         private void OnPanelMousePressed(object sender, MouseEventArgs e) 
         {
-            leftUpVert = e.Location;
-            Rect rect = new Rect
+            if (isToolChosen)
             {
-                rightBotVert = leftUpVert,
-                leftUpVert = leftUpVert
-            };
-            figures.Add(rect);
-            isPressed = true;
-            
-           // Cursor.Position = new Point(Cursor.Position.X - 50, Cursor.Position.Y - 50);
-           // Cursor.Clip = new Rectangle(this.Location, this.Size);
-           // Cursor.Clip = new Rectangle(0,0, pictureBox1.Width,pictureBox1.Height);
+                leftUpVert = e.Location;
+                AbstrFigure rect = null;
+                Type TestType = Type.GetType("gr_editor.Figures." + tool, false, false);
+                if (TestType != null)
+                {
+                    System.Reflection.ConstructorInfo ci = TestType.GetConstructor(new Type[] { typeof(Point), typeof(Point) });
+                    rect = (AbstrFigure)ci.Invoke(new object[] { leftUpVert, leftUpVert });
+                }
+                figures.Add(rect);
+                isPressed = true;
+            }
         }
 
         private void OnPanelMouseReleased(object sender, MouseEventArgs e)
         {
-            bmp.Save("D:\\Лабы_4сем\\ООТПиСП\\gr_editor\\gr_editor\\my.bmp");
-            undoList.Clear();
-            isPressed = false;
+            if(isPressed)
+            {
+                undoList.Clear();
+                isPressed = false;
+            }
+            
         }
 
         private void OnPanelMouseMove(object sender, MouseEventArgs e)
@@ -79,7 +79,7 @@ namespace gr_editor
             {
                 rightBotVert = e.Location;
                 rightBotVert=CheckPosition(rightBotVert); 
-                figures[figures.Count - 1].Resize(CheckPosition(rightBotVert));
+                figures.list[figures.Count() - 1].Resize(CheckPosition(rightBotVert));
                 Draw();
             }
         }
@@ -89,7 +89,7 @@ namespace gr_editor
             bmp = new Bitmap(pictureBox1.Width, pictureBox1.Height);
             Graphics g = Graphics.FromImage(bmp);
             Pen myPen = GetPen();
-            foreach (var item in figures)
+            foreach (var item in figures.list)
             {
                 item.Draw(g,myPen);
             }
@@ -110,10 +110,10 @@ namespace gr_editor
 
         private void Redo()
         {
-            if(undoList.Count>0)
+            if(undoList.Count()>0)
             {
-                figures.Add(undoList[undoList.Count - 1]);
-                undoList.RemoveAt(undoList.Count - 1);
+                figures.Add(undoList.list[undoList.Count() - 1]);
+                undoList.RemoveAt(undoList.Count() - 1);
             }
             Draw();
         }
@@ -121,35 +121,21 @@ namespace gr_editor
         private void Undo()
         {
             pictureBox1.Refresh();
-            if(figures.Count>0)
+            if(figures.Count()>0)
             {
-                undoList.Add(figures[figures.Count - 1]);
-                figures.RemoveAt(figures.Count - 1);
+                undoList.Add(figures.list[figures.Count() - 1]);
+                figures.RemoveAt(figures.Count() - 1);
                 Draw();
             }
             
         }
 
-        private void ToolChosen(object sender, EventArgs e)
-        {
-            int tool= ToolBox.SelectedIndex;
-            type= ToolBox.SelectedItem.GetType();
-            switch(tool)
-            {
-                case 0:
-                    Tool = new Rect();
-                    break;
-                case 2:
-                    Tool = new Oval();
-                    break;
-            }
-        }
+       
 
         private Point CheckPosition(Point vertex)
         {
             if(isPressed)
             {
-               // pictureBox1.Cursor = new Cursor(Cursor.Current.Handle);
                 if (vertex.X <= 0)
                 {
                     vertex = new Point(5, vertex.Y);
@@ -171,5 +157,48 @@ namespace gr_editor
             
         }
 
+        private void RectButtonClicked(object sender, EventArgs e)
+        {
+            tool = RectButton.Text;
+            isToolChosen = true;
+        }
+
+        private void OvalButtonClicked(object sender, EventArgs e)
+        {
+            tool = OvalButton.Text;
+            isToolChosen = true;
+        }
+
+        private void LineButtonClicked(object sender, EventArgs e)
+        {
+            tool = LineButton.Text;
+            isToolChosen = true;
+        }
+
+        private void RhombusButtonClicked(object sender, EventArgs e)
+        {
+            tool = RhombusButton.Text;
+            isToolChosen = true;
+
+        }
+
+        private void TriButtonClicked(object sender, EventArgs e)
+        {
+            tool = TriButton.Text;
+            isToolChosen = true;
+
+        }
+
+        private void CircleButtonClicked(object sender, EventArgs e)
+        {
+            tool = StarButton.Text;
+            isToolChosen = true;
+        }
+
+        private void StarButtonClicked(object sender, EventArgs e)
+        {
+            tool = StarButton.Text;
+            isToolChosen = true;
+        }
     }
 }

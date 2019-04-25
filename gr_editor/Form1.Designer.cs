@@ -32,25 +32,21 @@ namespace gr_editor
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this.ToolBox = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.RectButton = new System.Windows.Forms.Button();
+            this.OvalButton = new System.Windows.Forms.Button();
+            this.LineButton = new System.Windows.Forms.Button();
+            this.RhombusButton = new System.Windows.Forms.Button();
+            this.TriButton = new System.Windows.Forms.Button();
+            this.StarButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
-            // 
-            // ToolBox
-            // 
-            this.ToolBox.FormattingEnabled = true;
-            this.ToolBox.Location = new System.Drawing.Point(886, 196);
-            this.ToolBox.Name = "ToolBox";
-            this.ToolBox.Size = new System.Drawing.Size(198, 24);
-            this.ToolBox.TabIndex = 1;
-            this.ToolBox.SelectedIndexChanged += new System.EventHandler(this.ToolChosen);
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(883, 165);
+            this.label1.Location = new System.Drawing.Point(882, 26);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(91, 17);
             this.label1.TabIndex = 2;
@@ -69,14 +65,81 @@ namespace gr_editor
             this.pictureBox1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.OnPanelMouseMove);
             this.pictureBox1.MouseUp += new System.Windows.Forms.MouseEventHandler(this.OnPanelMouseReleased);
             // 
+            // RectButton
+            // 
+            this.RectButton.Location = new System.Drawing.Point(885, 69);
+            this.RectButton.Name = "RectButton";
+            this.RectButton.Size = new System.Drawing.Size(183, 23);
+            this.RectButton.TabIndex = 4;
+            this.RectButton.Text = "Rect";
+            this.RectButton.UseVisualStyleBackColor = true;
+            this.RectButton.Click += new System.EventHandler(this.RectButtonClicked);
+            // 
+            // OvalButton
+            // 
+            this.OvalButton.Location = new System.Drawing.Point(885, 109);
+            this.OvalButton.Name = "OvalButton";
+            this.OvalButton.Size = new System.Drawing.Size(182, 22);
+            this.OvalButton.TabIndex = 5;
+            this.OvalButton.Text = "Oval";
+            this.OvalButton.UseVisualStyleBackColor = true;
+            this.OvalButton.Click += new System.EventHandler(this.OvalButtonClicked);
+            // 
+            // LineButton
+            // 
+            this.LineButton.Location = new System.Drawing.Point(885, 152);
+            this.LineButton.Name = "LineButton";
+            this.LineButton.Size = new System.Drawing.Size(182, 22);
+            this.LineButton.TabIndex = 6;
+            this.LineButton.Text = "Line";
+            this.LineButton.UseVisualStyleBackColor = true;
+            this.LineButton.Click += new System.EventHandler(this.LineButtonClicked);
+            // 
+            // RhombusButton
+            // 
+            this.RhombusButton.Location = new System.Drawing.Point(886, 191);
+            this.RhombusButton.Name = "RhombusButton";
+            this.RhombusButton.Size = new System.Drawing.Size(182, 22);
+            this.RhombusButton.TabIndex = 7;
+            this.RhombusButton.Text = "Rhombus";
+            this.RhombusButton.UseVisualStyleBackColor = true;
+            this.RhombusButton.Click += new System.EventHandler(this.RhombusButtonClicked);
+            // 
+            // TriButton
+            // 
+            this.TriButton.Location = new System.Drawing.Point(886, 232);
+            this.TriButton.Name = "TriButton";
+            this.TriButton.Size = new System.Drawing.Size(182, 25);
+            this.TriButton.TabIndex = 8;
+            this.TriButton.Text = "Triangle";
+            this.TriButton.UseVisualStyleBackColor = true;
+            this.TriButton.Click += new System.EventHandler(this.TriButtonClicked);
+            // 
+            // StarButton
+            // 
+            this.StarButton.Location = new System.Drawing.Point(886, 275);
+            this.StarButton.Name = "StarButton";
+            this.StarButton.Size = new System.Drawing.Size(182, 22);
+            this.StarButton.TabIndex = 9;
+            this.StarButton.Text = "Star";
+            this.StarButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextAboveImage;
+            this.StarButton.UseVisualStyleBackColor = true;
+            this.StarButton.Click += new System.EventHandler(this.StarButtonClicked);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1096, 569);
+            this.Controls.Add(this.StarButton);
+            this.Controls.Add(this.TriButton);
+            this.Controls.Add(this.RhombusButton);
+            this.Controls.Add(this.LineButton);
+            this.Controls.Add(this.OvalButton);
+            this.Controls.Add(this.RectButton);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.ToolBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
             this.Text = "Form1";
@@ -90,9 +153,14 @@ namespace gr_editor
 
        
         #endregion
-        private ComboBox ToolBox;
         private Label label1;
         private PictureBox pictureBox1;
+        private Button RectButton;
+        private Button OvalButton;
+        private Button LineButton;
+        private Button RhombusButton;
+        private Button TriButton;
+        private Button StarButton;
     }
 }
 
