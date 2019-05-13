@@ -40,6 +40,7 @@ namespace gr_editor
             this.RhombusButton = new System.Windows.Forms.Button();
             this.TriButton = new System.Windows.Forms.Button();
             this.StarButton = new System.Windows.Forms.Button();
+            this.selectTool = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -126,11 +127,22 @@ namespace gr_editor
             this.StarButton.UseVisualStyleBackColor = true;
             this.StarButton.Click += new System.EventHandler(this.StarButtonClicked);
             // 
+            // selectTool
+            // 
+            this.selectTool.Location = new System.Drawing.Point(886, 381);
+            this.selectTool.Name = "selectTool";
+            this.selectTool.Size = new System.Drawing.Size(181, 23);
+            this.selectTool.TabIndex = 10;
+            this.selectTool.Text = "Выделить";
+            this.selectTool.UseVisualStyleBackColor = true;
+            this.selectTool.Click += new System.EventHandler(this.selectTool_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1096, 569);
+            this.Controls.Add(this.selectTool);
             this.Controls.Add(this.StarButton);
             this.Controls.Add(this.TriButton);
             this.Controls.Add(this.RhombusButton);
@@ -161,6 +173,7 @@ namespace gr_editor
         private Button RhombusButton;
         private Button TriButton;
         private Button StarButton;
+        private Button selectTool;
     }
 }
 
