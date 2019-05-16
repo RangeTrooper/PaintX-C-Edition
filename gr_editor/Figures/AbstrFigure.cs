@@ -9,14 +9,19 @@ using static System.Math;
 
 namespace gr_editor
 {
+    [Serializable]
     public abstract class AbstrFigure
     {
-
+        [NonSerialized]
         public Graphics gc;
+        [NonSerialized]
         public Point leftUpVert;
+        [NonSerialized]
         public Point rightBotVert;
+        [NonSerialized]
         public Pen myPen;
         public float x, y, w, h;
+        [NonSerialized]
         public bool isSelected;
 
         public AbstrFigure(Point a,Point b)

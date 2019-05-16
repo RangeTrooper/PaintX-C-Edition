@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace gr_editor.Figures
 {
+    [Serializable]
     class FiguresList
     {
         public List<AbstrFigure> list;

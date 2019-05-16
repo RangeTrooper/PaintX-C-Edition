@@ -9,11 +9,14 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using gr_editor.Figures;
 using gr_editor.Interfaces;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace gr_editor
 {
     public partial class Form1 : Form
-    { 
+    {
+        FiguresFactory Factory;
 	    Color color = Color.Black; 
         bool isPressed = false; 
         Graphics g; 
@@ -60,14 +63,15 @@ namespace gr_editor
             {
                 SearchForFigure(e.Location);
                 leftUpVert = e.Location;
-                AbstrFigure rect = null;
-                Type TestType = Type.GetType("gr_editor.Figures." + tool, false, false);
-                if (TestType != null)
-                {
-                    System.Reflection.ConstructorInfo ci = TestType.GetConstructor(new Type[] { typeof(Point), typeof(Point) });
-                    rect = (AbstrFigure)ci.Invoke(new object[] { leftUpVert, leftUpVert });
-                }
-                figures.Add(rect);
+                /* AbstrFigure figure = null;
+                 Type TestType = Type.GetType("gr_editor.Figures." + tool, false, false);
+                 if (TestType != null)
+                 {
+                     System.Reflection.ConstructorInfo ci = TestType.GetConstructor(new Type[] { typeof(Point), typeof(Point) });
+                     figure = (AbstrFigure)ci.Invoke(new object[] { leftUpVert, leftUpVert });
+                 }*/
+                AbstrFigure figure = Factory.FactoryMethod(leftUpVert, leftUpVert);
+                this.figures.Add(figure);
                 isPressed = true;
             }else if ((isSelectionToolChosen)&&(figures.Count() > 0) )
             {
@@ -78,17 +82,23 @@ namespace gr_editor
 
         private void SearchForFigure(Point point)//проходим по списку фигур, ищем ту, в которой находитс точка клика
         {
-            for(int i=figures.list.Count-1;i>=0;i--)
+            bool found = false;
+            int i = figures.list.Count - 1;
+            while ((i>=0)&&(!found))
             {
                 if(figures.list[i] is ISelectable)
                 {
-                    Type type=figures.list[i].GetType();// temp = new figures.list[i].GetType();
+                   
                     if ((figures.list[i].IsSelected(point))&&(!isToolChosen)&&(!figures.list[i].isSelected))
                     {
+                        for (int j = i - 1; j >= 0; j--)
+                            figures.list[j].isSelected = false;
+                        found = true;
                         figures.list[i].isSelected = true;
                         Console.WriteLine(i + "Is selected");
                     }else if((figures.list[i].isSelected)&& (figures.list[i].IsSelected(point))&&(figures.list[i] is IMovable))
                     {
+                        found = true;
                         isMoving = true;
                         leftUpVert = point;
                     }else if ((figures.list[i].isSelected)||((isToolChosen)&&(figures.list[i].isSelected)))
@@ -96,7 +106,9 @@ namespace gr_editor
                         figures.list[i].isSelected = false;
                     }
                     Draw();
+                    
                 }
+                i--;
             }
             
         }
@@ -120,8 +132,9 @@ namespace gr_editor
            if(isPressed)
             {
                 rightBotVert = e.Location;
-                rightBotVert=CheckPosition(rightBotVert); 
-                figures.list[figures.Count() - 1].Resize(CheckPosition(rightBotVert));
+                // rightBotVert=CheckPosition(rightBotVert); 
+                //figures.list[figures.Count() - 1].Resize(CheckPosition(rightBotVert));
+                figures.list[figures.Count() - 1].Resize((rightBotVert));
                 Draw();
             }else if (isMoving)
             {
@@ -191,6 +204,30 @@ namespace gr_editor
         }
 
        
+        private void Serialize()
+        {
+            FileStream stream =new FileStream("figures.txt", FileMode.Create);
+            var bformatter = new BinaryFormatter();
+            bformatter.Serialize(stream, figures);
+            stream.Close();
+        }
+
+        private object Deserialize()
+        {
+            if (!System.IO.File.Exists("figures.txt"))
+            {
+                MessageBox.Show("Не был найден файл figures.txt", "Ошибка", MessageBoxButtons.OK,MessageBoxIcon.Error);
+                throw new NotImplementedException();
+            }
+
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            using (Stream fStream = File.OpenRead("figures.txt"))
+            {
+                
+                return formatter.Deserialize(fStream);
+            }
+        }
 
         private Point CheckPosition(Point vertex)
         {
@@ -220,24 +257,28 @@ namespace gr_editor
         private void RectButtonClicked(object sender, EventArgs e)
         {
             tool = RectButton.Text;
+            Factory = new CreateRect();
             isToolChosen = true;
         }
 
         private void OvalButtonClicked(object sender, EventArgs e)
         {
             tool = OvalButton.Text;
+            Factory = new CreateOval();
             isToolChosen = true;
         }
 
         private void LineButtonClicked(object sender, EventArgs e)
         {
             tool = LineButton.Text;
+            Factory = new CreateLine();
             isToolChosen = true;
         }
 
         private void RhombusButtonClicked(object sender, EventArgs e)
         {
             tool = RhombusButton.Text;
+            Factory = new CreateRhombus();
             isToolChosen = true;
 
         }
@@ -245,6 +286,7 @@ namespace gr_editor
         private void TriButtonClicked(object sender, EventArgs e)
         {
             tool = TriButton.Text;
+            Factory = new CreateTriangle();
             isToolChosen = true;
 
         }
@@ -252,12 +294,14 @@ namespace gr_editor
         private void CircleButtonClicked(object sender, EventArgs e)
         {
             tool = StarButton.Text;
+            
             isToolChosen = true;
         }
 
         private void StarButtonClicked(object sender, EventArgs e)
         {
             tool = StarButton.Text;
+            Factory = new CreateStar();
             isToolChosen = true;
         }
 
@@ -267,7 +311,24 @@ namespace gr_editor
             isToolChosen = false;
         }
 
-        
+        private void SaveButtonClicked(object sender, EventArgs e)
+        {
+            //List<Abs> list = new List<Worker>();
+            Serialize();
+        }
+
+        private void LoadButtonClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                figures = (FiguresList)Deserialize();
+                Draw();
+            }
+            catch 
+            {
+                MessageBox.Show("Файл не может быть загружен: нарушена структура файла", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 
 }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace gr_editor.Figures
 {
+    [Serializable]
     class Rect : AbstrFigure,ISelectable,IMovable
     {
 

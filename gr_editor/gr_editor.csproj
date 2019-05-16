@@ -47,6 +47,7 @@
   <ItemGroup>
     <Compile Include="Figures\AbstrFigure.cs" />
     <Compile Include="Figures\Circle.cs" />
+    <Compile Include="Figures\FiguresFactory.cs" />
     <Compile Include="Figures\FiguresList.cs" />
     <Compile Include="Figures\Line.cs" />
     <Compile Include="Figures\Oval.cs" />

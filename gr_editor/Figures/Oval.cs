@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace gr_editor.Figures
 {
+    [Serializable]
     class Oval : AbstrFigure,ISelectable,IMovable
     {
         public Oval(Point a, Point b) : base(a, b)
@@ -22,6 +23,8 @@ namespace gr_editor.Figures
         public override void Draw(Graphics g, Pen pen)
         {
             g.DrawEllipse(pen, x, y, w, h);
+            SolidBrush solidBrush = new SolidBrush(Color.Azure);
+            g.FillEllipse(solidBrush, x, y, w, h);
             if (isSelected)
             {
                 ShowSelection(g);
