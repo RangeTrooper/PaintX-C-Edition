@@ -139,6 +139,7 @@ namespace gr_editor
                         Cursor.Current = Cursors.Cross;
                         rightBotVert = e.Location;
                         figures.list[i].Move(leftUpVert, rightBotVert);
+                        
                         Draw();
                         leftUpVert = rightBotVert;
                         found = true;
@@ -187,7 +188,8 @@ namespace gr_editor
             pictureBox1.Refresh();
             if(figures.Count()>0)
             {
-               figures.undoList.Add(figures.list[figures.Count() - 1]);
+                
+                figures.undoList.Add(figures.list[figures.Count() - 1]);
                 figures.RemoveAt(figures.Count() - 1);
                 Draw();
             }

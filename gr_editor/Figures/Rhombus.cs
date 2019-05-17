@@ -24,6 +24,13 @@ namespace gr_editor.Figures
             g.DrawLine(pen, x + w / 2, y,x+w, y + h / 2);
             g.DrawLine(pen, x + w , y+h/2, x + w / 2,y+h);
             g.DrawLine(pen, x + w / 2, y + h, x, y + h / 2);
+            SolidBrush solidBrush = new SolidBrush(Color.Azure);
+            Point point1 = new Point((int)x, ((int)(y + h / 2)));
+            Point point2 = new Point((int)(x + w / 2), ((int)(y)));
+            Point point3 = new Point((int)(x + w), ((int)(y + h / 2)));
+            Point point4 = new Point((int)(x + w / 2), ((int)(y + h)));
+            Point[] triPoints = { point1, point2, point3 ,point4};
+            g.FillPolygon(solidBrush, triPoints);
             if (isSelected)
             {
                 ShowSelection(g);
