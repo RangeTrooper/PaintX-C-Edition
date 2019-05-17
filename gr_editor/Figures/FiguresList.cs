@@ -7,13 +7,37 @@ using System.Threading.Tasks;
 namespace gr_editor.Figures
 {
     [Serializable]
-    class FiguresList
+    public class FiguresList
     {
-        public List<AbstrFigure> list;
+        private static FiguresList instance ;
 
-        public FiguresList()
+      
+        public List<AbstrFigure> list;
+        public List<AbstrFigure> undoList;
+        private FiguresList()
         {
            list = new List<AbstrFigure>();
+           undoList = new List<AbstrFigure>();
+        }
+
+
+        public static FiguresList GetInstance()
+        {
+          
+
+            // Если экземпляр еще не инициализирован - выполняем инициализацию. 
+            // Иначе возвращаем имеющийся экземпляр.
+            if (instance == null)
+            {
+                
+                    if (instance == null)
+                    {
+                        instance = new FiguresList();
+                    }
+                
+            }
+
+            return instance;
         }
 
         public void Add(AbstrFigure fig)

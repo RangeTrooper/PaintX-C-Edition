@@ -26,20 +26,12 @@ namespace gr_editor
 
         public AbstrFigure(Point a,Point b)
         {
-           // gc = GC;
-           // myPen = pen;
             leftUpVert = a;
             rightBotVert = b;
             SetDimensions(leftUpVert, rightBotVert);
-
-            //сюда можно добавить процедуру отрисовки, то есть вызов метода этого же класса
-          //  Draw(gc);
+            
         }
-         public AbstrFigure()
-        {
-
-        }
-        //public virtual void Draw(Graphics G,Pen pen,float x,float y,float w, float h)
+       
         public virtual void Draw(Graphics g,Pen pen)
         {
            

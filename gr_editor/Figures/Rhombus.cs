@@ -16,10 +16,7 @@ namespace gr_editor.Figures
 
         }
 
-        public Rhombus():base()
-        {
-
-        }
+        
 
         public override void Draw(Graphics g, Pen pen)
         {

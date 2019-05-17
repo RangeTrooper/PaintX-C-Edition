@@ -11,6 +11,7 @@ using gr_editor.Figures;
 using gr_editor.Interfaces;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Globalization;
 
 namespace gr_editor
 {
@@ -22,8 +23,8 @@ namespace gr_editor
         Graphics g; 
         Point leftUpVert;
         Point rightBotVert;
-        FiguresList figures = new FiguresList();
-        FiguresList undoList = new FiguresList();
+        FiguresList figures = FiguresList.GetInstance();
+        FiguresList figures2 = FiguresList.GetInstance();
         Bitmap bmp;
         bool isToolChosen=false;
         bool isSelectionToolChosen = false;
@@ -63,13 +64,6 @@ namespace gr_editor
             {
                 SearchForFigure(e.Location);
                 leftUpVert = e.Location;
-                /* AbstrFigure figure = null;
-                 Type TestType = Type.GetType("gr_editor.Figures." + tool, false, false);
-                 if (TestType != null)
-                 {
-                     System.Reflection.ConstructorInfo ci = TestType.GetConstructor(new Type[] { typeof(Point), typeof(Point) });
-                     figure = (AbstrFigure)ci.Invoke(new object[] { leftUpVert, leftUpVert });
-                 }*/
                 AbstrFigure figure = Factory.FactoryMethod(leftUpVert, leftUpVert);
                 this.figures.Add(figure);
                 isPressed = true;
@@ -117,7 +111,7 @@ namespace gr_editor
         {
             if(isPressed)
             {
-                undoList.Clear();
+                figures.undoList.Clear();
                 isPressed = false;
             }else if (isMoving)
             {
@@ -132,8 +126,6 @@ namespace gr_editor
            if(isPressed)
             {
                 rightBotVert = e.Location;
-                // rightBotVert=CheckPosition(rightBotVert); 
-                //figures.list[figures.Count() - 1].Resize(CheckPosition(rightBotVert));
                 figures.list[figures.Count() - 1].Resize((rightBotVert));
                 Draw();
             }else if (isMoving)
@@ -144,7 +136,6 @@ namespace gr_editor
                 {
                     if ((figures.list[i].isSelected))
                     {
-                        //this.Cursor = Cursor.Cross;
                         Cursor.Current = Cursors.Cross;
                         rightBotVert = e.Location;
                         figures.list[i].Move(leftUpVert, rightBotVert);
@@ -183,10 +174,10 @@ namespace gr_editor
 
         private void Redo()
         {
-            if(undoList.Count()>0)
+            if(figures.undoList.Count()>0)
             {
-                figures.Add(undoList.list[undoList.Count() - 1]);
-                undoList.RemoveAt(undoList.Count() - 1);
+                figures.Add(figures.undoList[figures.undoList.Count() - 1]);
+                figures.undoList.RemoveAt(figures.undoList.Count() - 1);
             }
             Draw();
         }
@@ -196,37 +187,69 @@ namespace gr_editor
             pictureBox1.Refresh();
             if(figures.Count()>0)
             {
-                undoList.Add(figures.list[figures.Count() - 1]);
+               figures.undoList.Add(figures.list[figures.Count() - 1]);
                 figures.RemoveAt(figures.Count() - 1);
                 Draw();
             }
             
         }
 
-       
-        private void Serialize()
-        {
-            FileStream stream =new FileStream("figures.txt", FileMode.Create);
-            var bformatter = new BinaryFormatter();
-            bformatter.Serialize(stream, figures);
-            stream.Close();
-        }
-
-        private object Deserialize()
+        private void Deserialize()
         {
             if (!System.IO.File.Exists("figures.txt"))
             {
                 MessageBox.Show("Не был найден файл figures.txt", "Ошибка", MessageBoxButtons.OK,MessageBoxIcon.Error);
                 throw new NotImplementedException();
             }
-
-            BinaryFormatter formatter = new BinaryFormatter();
-
-            using (Stream fStream = File.OpenRead("figures.txt"))
+            StreamReader f = new StreamReader("figures.txt");
+            figures.list.Clear();
+            while (!f.EndOfStream)
             {
-                
-                return formatter.Deserialize(fStream);
+                string s = f.ReadLine();
+                string[] data = s.Split(new char[] { ',' });
+                try
+                {
+                   
+                    float x = float.Parse(data[1], CultureInfo.InvariantCulture.NumberFormat);
+                    float y = float.Parse(data[2], CultureInfo.InvariantCulture.NumberFormat);
+                    float w = float.Parse(data[3], CultureInfo.InvariantCulture.NumberFormat);
+                    float h = float.Parse(data[4], CultureInfo.InvariantCulture.NumberFormat);
+                    Point a = new Point((int)x,(int) y);
+                    Point b = new Point((int)w, (int)h);
+                    String type = data[0];
+                    switch (type)
+                    {
+                        case "Rect":
+                            Factory = new CreateRect();
+                            break;
+                        case "Oval":
+                            Factory = new CreateOval();
+                            break;
+                        case "Line":
+                            Factory = new CreateLine();
+                            break;
+                        case "Triangle":
+                            Factory = new CreateTriangle();
+                            break;
+                        case "Rhombus":
+                            Factory = new CreateRhombus();
+                            break;
+                        case "Star":
+                            Factory = new CreateStar();
+                            break;
+                        default:
+                            Factory = null;
+                            break;
+                    }
+                    AbstrFigure figure = Factory.FactoryMethod(a, b);
+                    figures.list.Add(figure);
+                }
+                catch
+                {
+                    
+                }
             }
+            f.Close();
         }
 
         private Point CheckPosition(Point vertex)
@@ -252,6 +275,17 @@ namespace gr_editor
             }
             return vertex;
             
+        }
+
+        public void Serialize()
+        {
+            StreamWriter f = new StreamWriter("figures.txt");
+            foreach (AbstrFigure fig in figures.list)
+            {
+                String type = fig.GetType().ToString().Substring(18);
+                f.WriteLine(type + "," + fig.leftUpVert.X.ToString() + "," + fig.leftUpVert.Y.ToString() + "," + fig.rightBotVert.X.ToString() + "," + fig.rightBotVert.Y.ToString() + ",");
+            }
+            f.Close();
         }
 
         private void RectButtonClicked(object sender, EventArgs e)
@@ -313,7 +347,7 @@ namespace gr_editor
 
         private void SaveButtonClicked(object sender, EventArgs e)
         {
-            //List<Abs> list = new List<Worker>();
+            
             Serialize();
         }
 
@@ -321,12 +355,12 @@ namespace gr_editor
         {
             try
             {
-                figures = (FiguresList)Deserialize();
+                Deserialize();
                 Draw();
             }
             catch 
             {
-                MessageBox.Show("Файл не может быть загружен: нарушена структура файла", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               
             }
         }
     }

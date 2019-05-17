@@ -15,10 +15,7 @@ namespace gr_editor.Figures
 
         }
 
-        public Line():base()
-        {
-
-        }
+        
 
         public override void Draw(Graphics g, Pen pen)
         {

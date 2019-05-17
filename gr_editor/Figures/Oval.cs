@@ -16,10 +16,7 @@ namespace gr_editor.Figures
 
         }
 
-        public Oval() : base()
-        {
-
-        }
+        
         public override void Draw(Graphics g, Pen pen)
         {
             g.DrawEllipse(pen, x, y, w, h);

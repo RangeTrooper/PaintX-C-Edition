@@ -15,10 +15,6 @@ namespace gr_editor.Figures
 
         }
 
-        public Triangle():base()
-        {
-
-        }
 
         public override void Draw(Graphics g, Pen pen)
         {
