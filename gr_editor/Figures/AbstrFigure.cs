@@ -107,17 +107,26 @@ namespace gr_editor
         {
             float dx = Abs(b.X - a.X);
             float dy = Abs(b.Y - a.Y);
+            
             if (b.X > a.X)
             {
                 if (b.Y > a.Y)
                 {
                     x = x + dx;
                     y = y + dy;
+                    leftUpVert.X +=(int) dx;
+                    leftUpVert.Y += (int)dy;
+                    rightBotVert.X += (int)dx;
+                    rightBotVert.Y += (int)dy;
                 }
                 else
                 {
                     x = x+dx;
                     y = y-dy;
+                    leftUpVert.X += (int)dx;
+                    leftUpVert.Y -= (int)dy;
+                    rightBotVert.X += (int)dx;
+                    rightBotVert.Y -= (int)dy;
                 }
             }
             else
@@ -126,14 +135,21 @@ namespace gr_editor
                 {
                     x = x-dx;
                     y = y-dy;
+                    leftUpVert.X -= (int)dx;
+                    leftUpVert.Y -= (int)dy;
+                    rightBotVert.X -= (int)dx;
+                    rightBotVert.Y -= (int)dy;
                 }
                 else
                 {
                     x = x-dx;
                     y = y+dy;
+                    leftUpVert.X -= (int)dx;
+                    leftUpVert.Y += (int)dy;
+                    rightBotVert.X -= (int)dx;
+                    rightBotVert.Y += (int)dy;
                 }
             }
-           // SetDimensions(new Point((int)(x + dx), (int)(y + dy)), new Point((int)(x +w+ dx), (int)(y +h+ dy)));
         }
     }
 }
