@@ -30,16 +30,24 @@ namespace gr_editor.Figures
 
         public override bool IsSelected(Point point)
         {
-            bool found = false;
+            bool result = false;
             float x1 = leftUpVert.X;
             float y1 = leftUpVert.Y ;
             float x2 = rightBotVert.X;
             float y2 = rightBotVert.Y ;
             int i = 1;
             float Y = point.Y-15;
-            return (((point.X <= leftUpVert.X && point.X >= rightBotVert.X) || (point.X >= leftUpVert.X && point.X <= rightBotVert.X)) &&
-               ((point.X <= leftUpVert.Y && point.Y >= rightBotVert.Y) || (point.Y >= leftUpVert.Y && point.Y <= rightBotVert.Y)) &&
-            (Math.Abs(((leftUpVert.X - point.X) / (leftUpVert.Y - point.Y)) - ((leftUpVert.X - rightBotVert.X) / (leftUpVert.Y - rightBotVert.Y))) < 2));
+            try
+            {
+                result= (((point.X <= leftUpVert.X && point.X >= rightBotVert.X) || (point.X >= leftUpVert.X && point.X <= rightBotVert.X)) &&
+                   ((point.X <= leftUpVert.Y && point.Y >= rightBotVert.Y) || (point.Y >= leftUpVert.Y && point.Y <= rightBotVert.Y)) &&
+                (Math.Abs(((leftUpVert.X - point.X) / (leftUpVert.Y - point.Y)) - ((leftUpVert.X - rightBotVert.X) / (leftUpVert.Y - rightBotVert.Y))) < 2));
+                return result;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public override void ShowSelection(Graphics g)
