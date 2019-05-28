@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace gr_editor.Interfaces
 {
-    interface ISelectable
+    public interface ISelectable
     {
        bool IsSelected(Point point);
        void ShowSelection(Graphics g);

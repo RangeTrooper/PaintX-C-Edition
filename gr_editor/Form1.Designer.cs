@@ -82,6 +82,7 @@ namespace gr_editor
             // 
             // OvalButton
             // 
+            this.OvalButton.Enabled = false;
             this.OvalButton.Location = new System.Drawing.Point(885, 109);
             this.OvalButton.Name = "OvalButton";
             this.OvalButton.Size = new System.Drawing.Size(182, 22);
@@ -92,6 +93,7 @@ namespace gr_editor
             // 
             // LineButton
             // 
+            this.LineButton.Enabled = false;
             this.LineButton.Location = new System.Drawing.Point(885, 152);
             this.LineButton.Name = "LineButton";
             this.LineButton.Size = new System.Drawing.Size(182, 22);
@@ -102,6 +104,7 @@ namespace gr_editor
             // 
             // RhombusButton
             // 
+            this.RhombusButton.Enabled = false;
             this.RhombusButton.Location = new System.Drawing.Point(886, 191);
             this.RhombusButton.Name = "RhombusButton";
             this.RhombusButton.Size = new System.Drawing.Size(182, 22);
@@ -112,6 +115,7 @@ namespace gr_editor
             // 
             // TriButton
             // 
+            this.TriButton.Enabled = false;
             this.TriButton.Location = new System.Drawing.Point(886, 232);
             this.TriButton.Name = "TriButton";
             this.TriButton.Size = new System.Drawing.Size(182, 25);
@@ -122,6 +126,7 @@ namespace gr_editor
             // 
             // StarButton
             // 
+            this.StarButton.Enabled = false;
             this.StarButton.Location = new System.Drawing.Point(886, 275);
             this.StarButton.Name = "StarButton";
             this.StarButton.Size = new System.Drawing.Size(182, 22);

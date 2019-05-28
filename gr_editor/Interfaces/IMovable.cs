@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace gr_editor.Interfaces
 {
-    interface IMovable
+    public interface IMovable
     {
         void Move(Point a, Point b);
         

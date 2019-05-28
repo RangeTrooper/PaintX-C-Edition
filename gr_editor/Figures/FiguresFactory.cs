@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using gr_editor.Figures;
 using System.Drawing;
+//using Rect;
 
 namespace gr_editor.Figures
 {
@@ -17,11 +18,12 @@ namespace gr_editor.Figures
     {
         public override AbstrFigure FactoryMethod(Point a, Point b)
         {
-            return new Rect(a,b);
+            return null;
+            //return new Rect.Rect(a,b);
         }
     }
 
-    class CreateOval: FiguresFactory
+    /*class CreateOval: FiguresFactory
     {
         public override AbstrFigure FactoryMethod(Point a, Point b)
         {
@@ -59,5 +61,5 @@ namespace gr_editor.Figures
         {
             return new Star(a,b);
         }
-    }
+    }*/
 }

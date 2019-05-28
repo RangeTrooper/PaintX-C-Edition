@@ -1,0 +1,11 @@
+D:\Лабы_4сем\ООТПиСП\gr_editor\Line\bin\Debug\Line.dll
+D:\Лабы_4сем\ООТПиСП\gr_editor\Line\bin\Debug\Line.pdb
+D:\Лабы_4сем\ООТПиСП\gr_editor\Line\bin\Debug\gr_editor.exe
+D:\Лабы_4сем\ООТПиСП\gr_editor\Line\bin\Debug\Rect.dll
+D:\Лабы_4сем\ООТПиСП\gr_editor\Line\bin\Debug\gr_editor.pdb
+D:\Лабы_4сем\ООТПиСП\gr_editor\Line\bin\Debug\gr_editor.exe.config
+D:\Лабы_4сем\ООТПиСП\gr_editor\Line\bin\Debug\Rect.pdb
+D:\Лабы_4сем\ООТПиСП\gr_editor\Line\obj\Debug\Line.csprojResolveAssemblyReference.cache
+D:\Лабы_4сем\ООТПиСП\gr_editor\Line\obj\Debug\Line.csproj.CoreCompileInputs.cache
+D:\Лабы_4сем\ООТПиСП\gr_editor\Line\obj\Debug\Line.dll
+D:\Лабы_4сем\ООТПиСП\gr_editor\Line\obj\Debug\Line.pdb

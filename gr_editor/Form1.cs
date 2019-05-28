@@ -224,7 +224,7 @@ namespace gr_editor
                         case "Rect":
                             Factory = new CreateRect();
                             break;
-                        case "Oval":
+                        /*case "Oval":
                             Factory = new CreateOval();
                             break;
                         case "Line":
@@ -238,12 +238,12 @@ namespace gr_editor
                             break;
                         case "Star":
                             Factory = new CreateStar();
-                            break;
+                            break;*/
                         default:
                             Factory = null;
                             break;
                     }
-                    AbstrFigure figure = Factory.FactoryMethod(a, b);
+                    AbstrFigure figure = Factory.FactoryMethod(a, b);//проверка на null
                     figures.list.Add(figure);
                 }
                 catch
@@ -284,7 +284,7 @@ namespace gr_editor
             StreamWriter f = new StreamWriter("figures.txt");
             foreach (AbstrFigure fig in figures.list)
             {
-                String type = fig.GetType().ToString().Substring(18);
+                String type = fig.GetType().ToString().Substring(18);//дописать с длиной
                 f.WriteLine(type + "," + fig.leftUpVert.X.ToString() + "," + fig.leftUpVert.Y.ToString() + "," + fig.rightBotVert.X.ToString() + "," + fig.rightBotVert.Y.ToString() + ",");
             }
             f.Close();
@@ -300,21 +300,21 @@ namespace gr_editor
         private void OvalButtonClicked(object sender, EventArgs e)
         {
             tool = OvalButton.Text;
-            Factory = new CreateOval();
+            //Factory = new CreateOval();
             isToolChosen = true;
         }
 
         private void LineButtonClicked(object sender, EventArgs e)
         {
             tool = LineButton.Text;
-            Factory = new CreateLine();
+            //Factory = new CreateLine();
             isToolChosen = true;
         }
 
         private void RhombusButtonClicked(object sender, EventArgs e)
         {
             tool = RhombusButton.Text;
-            Factory = new CreateRhombus();
+            //Factory = new CreateRhombus();
             isToolChosen = true;
 
         }
@@ -322,7 +322,7 @@ namespace gr_editor
         private void TriButtonClicked(object sender, EventArgs e)
         {
             tool = TriButton.Text;
-            Factory = new CreateTriangle();
+            //Factory = new CreateTriangle();
             isToolChosen = true;
 
         }
@@ -337,7 +337,7 @@ namespace gr_editor
         private void StarButtonClicked(object sender, EventArgs e)
         {
             tool = StarButton.Text;
-            Factory = new CreateStar();
+            //Factory = new CreateStar();
             isToolChosen = true;
         }
 
