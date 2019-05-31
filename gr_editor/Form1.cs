@@ -12,6 +12,7 @@ using gr_editor.Interfaces;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Globalization;
+using System.Reflection;
 
 namespace gr_editor
 {
@@ -300,21 +301,21 @@ namespace gr_editor
         private void OvalButtonClicked(object sender, EventArgs e)
         {
             tool = OvalButton.Text;
-            //Factory = new CreateOval();
+            Factory = new CreateOval();
             isToolChosen = true;
         }
 
         private void LineButtonClicked(object sender, EventArgs e)
         {
             tool = LineButton.Text;
-            //Factory = new CreateLine();
+            Factory = new CreateLine();
             isToolChosen = true;
         }
 
         private void RhombusButtonClicked(object sender, EventArgs e)
         {
             tool = RhombusButton.Text;
-            //Factory = new CreateRhombus();
+            Factory = new CreateRhombus();
             isToolChosen = true;
 
         }
@@ -322,7 +323,7 @@ namespace gr_editor
         private void TriButtonClicked(object sender, EventArgs e)
         {
             tool = TriButton.Text;
-            //Factory = new CreateTriangle();
+            Factory = new CreateTriangle();
             isToolChosen = true;
 
         }
@@ -337,7 +338,7 @@ namespace gr_editor
         private void StarButtonClicked(object sender, EventArgs e)
         {
             tool = StarButton.Text;
-            //Factory = new CreateStar();
+            Factory = new CreateStar();
             isToolChosen = true;
         }
 
